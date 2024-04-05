@@ -1,0 +1,21 @@
+/* reset css */
+@import url("https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css");
+
+/* 추가 reset */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+input {
+  outline: none;
+  border: none;
+  color: inherit;
+}
+
+/* common */
+* {
+  box-sizing: border-box;
+}
+
+
