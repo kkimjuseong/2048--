@@ -160,11 +160,11 @@ function slideDown() {
   for (let c = 0; c < columns; c++){
     // 각 열에 대해 slide 함수 호출하여 아래쪽으로 이동 및 결합 작업 수행.
     let columns = [];
-    for (let r = rows - 1; r >= 0; r--) {
+    for (let r = rows - 1; r >= 0; r++) {
       columns.push(board[r][c]);
     }
     columns = slide(columns);
-    for (let r = rows - 1; r >= 0; r--) {
+    for (let r = rows - 1; r >= 0; r++) {
       board[r][c] = columns.pop();
     }
   }
@@ -172,7 +172,23 @@ function slideDown() {
   updateBoard();
 }  
 
-
+// filterZero(row)함수는 주어진 배열에서 0이 아닌 값들만들 필터링 해 새로운 배열을 생성하는 역할을 함.
+function filterZero(row) {
+  // 1. 주어진 배열을 순회하면서 0이 아닌 값을을 추출
+  // 2. 추출된 값들로 새로운 배열을 생성
+  // 3. 생성된 새로운 배열을 반환한다.
+  /*
+  이 함수는 주어진 배열에서 0이 아닌 값들만을 추출하여 새로운 배열을 생성하고, 해당 배열을 반환합니다. 
+  이 함수는 주로 slide() 함수 내에서 사용되어 이동 후에 0이 아닌 값들만을 남기는 데에 활용됩니다.
+  */
+  let nonZeroValues = [];
+  for (let i = 0; i < row.length; i++){
+    if(row[i] !== 0){
+      nonZeroValues.push(row[i])
+    }
+  }
+  return nonZeroValues;
+}
 
 // 6. 빈 타일 확인 및 새로운 타일 생성
 function setTwo() {
