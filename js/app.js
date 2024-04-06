@@ -139,6 +139,22 @@ function slideRight() {
   updateBoard();
 }
 
+// slideUp() 함수는 게임 보드를 위쪽으로 이동시키고 결합하는 역할을 함
+function slideUp() {
+  for (let c = 0; c < columns; c++){
+    // 각 열에 대해 slide 함수 호출하여 위쪽으로 이동 및 결합 작업 수행.
+    let columns = [];
+    for (let r = 0; r < rows; r++){
+      columns.push(board[r][c]);
+    }
+    columns = slide (columns);
+    for (let r = 0; r < rows; r++){
+      board[r][c] = columns;
+    }
+  }
+  updateBoard();
+}
+
 
 
 // 6. 빈 타일 확인 및 새로운 타일 생성
