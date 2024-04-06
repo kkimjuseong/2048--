@@ -131,13 +131,14 @@ function slideLeft() {
 
 // slideRight() 함수는 게임 보드를 오른쪽으로 이동시키고 결합하는 역할을 함
 function slideRight() {
-  // 1. 각 행에 대해 slide 함수를 호출
-  for(let r = 0; r < rows; r++){
-    board[r] = slide(board[r].slice().reverse()).reverse;
+  // 각 행에 대해 slide 함수를 호출하여 오른쪽으로 이동 및 결합 작업 수행
+  for (let r = 0; r < rows; r++) {
+    board[r] = slide(board[r].slice().reverse()).reverse();
   }
   // 결과 반영
   updateTile();
 }
+
 
 // slideUp() 함수는 게임 보드를 위쪽으로 이동시키고 결합하는 역할을 함
 function slideUp() {
@@ -161,11 +162,11 @@ function slideDown() {
   for (let c = 0; c < columns; c++){
     // 각 열에 대해 slide 함수 호출하여 아래쪽으로 이동 및 결합 작업 수행.
     let columns = [];
-    for (let r = rows - 1; r >= 0; r++) {
+    for (let r = rows - 1; r >= 0; r--) {
       columns.push(board[r][c]);
     }
     columns = slide(columns);
-    for (let r = rows - 1; r >= 0; r++) {
+    for (let r = rows - 1; r >= 0; r--) {
       board[r][c] = columns.pop();
     }
   }
@@ -232,6 +233,33 @@ function hasEmptyTile() {
 }
 
 // 7. 게임 종료 조건 확인
+// 이동할 수 없는지 확인하여 이동할 수 있는 타일이 없을때 게임종료
 function checkGameOver() {
-  // checkGameOver() 함수 구현
+  // 모든 타일을 순회하여 이동 가능한지를 확인
+  for(let r = 0; r < rows; r++){
+    for(let c = 0; c < columns; c++){
+      //현재 타일의 값
+      let currentTile = board[r][c];
+
+      //인접한 타일과 비교하여 이동 가능한지 확인
+      if (r > 0 && board[r - 1][c] === currentTile){
+        // 위쪽으로 이동 가능한 경우
+        return false;
+      }
+      if (r < rows - 1 && board[r + 1][c] === currentTile) {
+        // 아래쪽으로 이동 가능한 경우
+        return false; 
+      }
+      if (c > 0 && board[r][c - 1] === currentTile) {
+        // 왼쪽으로 이동 가능한 경우
+        return false; 
+      }
+      if (c < columns - 1 && board[r][c + 1] === currentTile) {
+        // 오른쪽으로 이동 가능한 경우
+        return false; 
+      }
+    }
+  }
+  // 이동 가능한 타일이 없을 경우 게임 종료
+  return true;
 }
