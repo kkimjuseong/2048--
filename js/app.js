@@ -155,6 +155,23 @@ function slideUp() {
   updateBoard();
 }
 
+// slideDown() 함수는 게임 보드를 아래쪽으로 이동시키고 결합하는 역할을 함.
+function slideDown() {
+  for (let c = 0; c < columns; c++){
+    // 각 열에 대해 slide 함수 호출하여 아래쪽으로 이동 및 결합 작업 수행.
+    let columns = [];
+    for (let r = rows - 1; r >= 0; r--) {
+      columns.push(board[r][c]);
+    }
+    columns = slide(columns);
+    for (let r = rows - 1; r >= 0; r--) {
+      board[r][c] = columns.pop();
+    }
+  }
+  // 결과 반영
+  updateBoard();
+}  
+
 
 
 // 6. 빈 타일 확인 및 새로운 타일 생성
