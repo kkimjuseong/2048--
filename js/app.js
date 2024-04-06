@@ -130,6 +130,15 @@ function slideLeft() {
 
 }
 
+// slideRight() 함수는 게임 보드를 오른쪽으로 이동시키고 결합하는 역할을 함
+function slideRight() {
+  // 1. 각 행에 대해 slide 함수를 호출
+  for(let r = 0; r < rows; r++){
+    board[r] = slide(board[r].slice().reverse()).reverse;
+  }
+  updateBoard();
+}
+
 
 
 // 6. 빈 타일 확인 및 새로운 타일 생성
