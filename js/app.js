@@ -216,8 +216,19 @@ function setTwo() {
   }
 }
 
+// hasEmptyTile() 함수는 게임 보드에 빈 타일이 존재하는지 확인하는 역할을 함
 function hasEmptyTile() {
-  // hasEmptyTile() 함수 구현
+  // 게임 보드를 순회 하면서 빈 타일이 있는지 확인
+  for(let r = 0; r < rows; r++){
+    for(let c = 0; c < columns; c++){
+      if(board[r][c] === 0){
+        // 빈 타일이 존재하면 true 반환
+        return true;
+      }
+    }
+  }
+  // 빈 타일이 존재하지 않으면 false 반환
+  return false; 
 }
 
 // 7. 게임 종료 조건 확인
