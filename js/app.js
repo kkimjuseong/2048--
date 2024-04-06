@@ -4,10 +4,9 @@ let board;
 let score = 0;
 const rows = 4;
 const columns = 4;
-const $board = document.querySelector('board')
-const $score = document.querySelector('score') 
-const $bestScore = document.querySelector('bestscore')
-
+const $board = document.querySelector("board");
+const $score = document.querySelector("score");
+const $bestScore = document.querySelector("bestscore");
 
 // 2. 게임 보드 생성 및 초기 상태 설정
 
@@ -21,6 +20,13 @@ function setGame() {
   ];
 
   // 보드 초기화 로직 구현
+  board = [];
+  for (let r = 0; r < rows; r++) {
+    board[r] = [];
+    for (let c = 0; c < columns; c++) {
+      board[r][c] = 0;
+    }
+  }
 
   // 타일 생성과 초기 상태 설정
   for (let r = 0; r < rows; r++) {
@@ -39,7 +45,7 @@ function setGame() {
 }
 
 // 3. 타일 업데이트 및 표시
-function updateTile(tile, num) {
+function updateBoard(tile, num) {
   tile.innerText = "";
   tile.classList.value = ""; // clear the classList
   tile.classList.add("tile");
@@ -72,29 +78,48 @@ document.addEventListener("keyup", (e) => {
 });
 
 // 5. 타일 이동 및 결합 로직 구현
+//slide() 함수는 주어진 배열 row를 왼쪽으로 이동시키고 결합하는 역할을 합니다.
+//이를 위해서는 배열 내에서 0이 아닌 값들을 왼쪽으로 이동시키고, 인접한 같은 값들을 합치는 작업을 수행해야 합니다.
+/*
+  1. 0이아닌 값들을 왼쪽으로 이동시키기
+  2. 인접한 같은 값들을 합치기
+  3. 결과 반환
+*/
+
 function slide(row) {
-  // slide() 함수 구현
-}
+  // 0이 아닌 값들을 왼쪽으로 이동시키기.
+  let newRow = [];
+  for (let i = 0; i < row.length; i++) {
+    if (row[i] !== 0) {
+      newRow.pusg(row[i]);
+    }
+  }
 
-function slideLeft() {
-  // slideLeft() 함수 구현
-}
+  // 인접한 같은 값들을 합치기.
+  for (let i = 0; i < newRow.length - 1; i++) {
+    if (newRow[i] === newRow[i + 1]) {
+      newRow[i] *= 2;
+      newRow[i + 1] = 0;
+    }
+  }
 
-function slideRight() {
-  // slideRight() 함수 구현
-}
+  // 0을 제회한 값들을 왼쪽으로 모으기
+  let resultRow = [];
+  for (let i = 0; i < newRow.length; i++) {
+    if (newRow[i] !== 0) {
+      resultRow.push(newRow[i]);
+    }
+  }
 
-function slideUp() {
-  // slideUp() 함수 구현
-}
+  // 필요한 경우 나머지 부분을 0으로 채워주기
+  while (resultRow.length < row.length) {
+    resultRow.push(0);
+  }
 
-function slideDown() {
-  // slideDown() 함수 구현
+  return resultRow;
 }
+// slideLeft() 함수는 게임 보드를 왼쪽으로 이동시키고 결합하는 역할을 함.
 
-function filterZero(row) {
-  // filterZero() 함수 구현
-}
 
 // 6. 빈 타일 확인 및 새로운 타일 생성
 function setTwo() {
