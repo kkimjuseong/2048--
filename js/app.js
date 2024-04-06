@@ -118,7 +118,18 @@ function slide(row) {
 
   return resultRow;
 }
+
 // slideLeft() 함수는 게임 보드를 왼쪽으로 이동시키고 결합하는 역할을 함.
+function slideLeft() {
+  // 1. 각 행에 대해 slide 함수를 호출
+  for (let r = 0; r < rows; r++){
+    board[r] = slide(board[r])
+  }
+  // 2. 결과 반영
+  updateBoard();
+
+}
+
 
 
 // 6. 빈 타일 확인 및 새로운 타일 생성
