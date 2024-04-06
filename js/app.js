@@ -45,7 +45,7 @@ function setGame() {
 }
 
 // 3. 타일 업데이트 및 표시
-function updateBoard(tile, num) {
+function updateTile(tile, num) {
   tile.innerText = "";
   tile.classList.value = ""; // clear the classList
   tile.classList.add("tile");
@@ -91,7 +91,7 @@ function slide(row) {
   let newRow = [];
   for (let i = 0; i < row.length; i++) {
     if (row[i] !== 0) {
-      newRow.pusg(row[i]);
+      newRow.push(row[i]);
     }
   }
 
@@ -126,8 +126,7 @@ function slideLeft() {
     board[r] = slide(board[r])
   }
   // 2. 결과 반영
-  updateBoard();
-
+  updateTile();
 }
 
 // slideRight() 함수는 게임 보드를 오른쪽으로 이동시키고 결합하는 역할을 함
@@ -136,7 +135,8 @@ function slideRight() {
   for(let r = 0; r < rows; r++){
     board[r] = slide(board[r].slice().reverse()).reverse;
   }
-  updateBoard();
+  // 결과 반영
+  updateTile();
 }
 
 // slideUp() 함수는 게임 보드를 위쪽으로 이동시키고 결합하는 역할을 함
@@ -152,7 +152,8 @@ function slideUp() {
       board[r][c] = columns;
     }
   }
-  updateBoard();
+  // 결과 반영
+  updateTile();
 }
 
 // slideDown() 함수는 게임 보드를 아래쪽으로 이동시키고 결합하는 역할을 함.
@@ -169,7 +170,7 @@ function slideDown() {
     }
   }
   // 결과 반영
-  updateBoard();
+  updateTile();
 }  
 
 // filterZero(row)함수는 주어진 배열에서 0이 아닌 값들만들 필터링 해 새로운 배열을 생성하는 역할을 함.
@@ -192,7 +193,27 @@ function filterZero(row) {
 
 // 6. 빈 타일 확인 및 새로운 타일 생성
 function setTwo() {
-  // setTwo() 함수 구현
+  // 1. 빈 공간 확인: 보드 상에 빈 공간이 있는지 확인, 즉 값이 0인 타일이 있는지 검사해야함.
+  // 2. 빈 공간에 랜덤한 위치에 새로운 타일 생성: 빈 공간이 있다면 그 중 하나를 선택해 값을 2로 설정한 후 해당 위치에 새로운 타일생성
+  if(!hasEmptyTile()){
+    // 빈 공간이 없으면 게임이 종료됨.
+    return;
+  }
+  let found = false;
+  while(found){
+    // 랜덤한 위치 생성
+    let r = Math.floor(Math.random() * rows);
+    let c = Math.floor(Math.random() * columns);
+    if(board[r][c] === 0){
+      // 빈 공간에 2생성
+      board[r][c] = 2;
+      // 해당 위치에 새로운 타일 생성
+      let $tile = document.getElementById(r.toString() + "-" + c.toString());
+      $tile.innerHTML = "2";
+      $tile.classList.add("x2");
+      found = true;
+    }
+  }
 }
 
 function hasEmptyTile() {
