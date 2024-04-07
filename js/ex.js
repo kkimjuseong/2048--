@@ -162,6 +162,20 @@ function slideRight() {
 }
 
 
+// slideUp() 함수는 게임 보드를 위쪽으로 이동시키고 결합하는 역할을 함
+function slideUp() {
+  for (let c = 0; c < columns; c++) {
+    let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
+    row = slide(row);
+    for (let r = 0; r < rows; r++) {
+      board[r][c] = row[r];
+      let tile = document.getElementById(r.toString() + "-" + c.toString());
+      let num = board[r][c];
+      updateTile(tile, num);
+    }
+  }
+}
+
 
 
 // 업데이트 타일
