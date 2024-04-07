@@ -163,7 +163,12 @@ function slide(row){
   return row;
 }
 
-
+function filterZero(row) {
+// 이 함수는 주어진 배열에서 0이 아닌 값들만을 추출하여 새로운 배열을 생성 및 반환
+// 이 함수는 주로 slide() 함수 내에서 사용되어,
+// 이동 후에 0이 아닌 값들만을 남기는 데에 활용됩니다.
+  return row.filter((num) => num !== 0); 
+}
 
 /*
 초보자가 위의 코드를 구현하려면 다음과 같은 순서로 함수를 만들어야 합니다.
