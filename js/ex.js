@@ -13,7 +13,7 @@ const $board = document.getElementById("board");
 
 window.onload = function () {
   setGame();
-  // $bestScore.innerHTML = localStorage.getItem("2048_best_score") || 0;
+  $bestScore.innerHTML = localStorage.getItem("2048_best_score") || 0;
 };
 
 function setGame() {
@@ -106,20 +106,6 @@ function hasEmptyTile(){
 // 이게 왜 이럴까? 설명이 필요해보임
 
 
-function updateTile(tile, num){
-  tile.innerHTML = "";
-  tile.classList.value = "";
-  tile.classList.add('tile');
-  if(num > 0){
-    tile.innerText = num.toString();
-    if(num <= 4096){
-      tile.classList.add("x" + num.toString());
-    }else{
-      tile.classList.add('x8192')
-    }
-  }
-}
-
 // 타일 이동 및 결합 로직 구현
 // 이해하고 나니 코드 자체는 쉬웠는데 어떤식으로 만들어야 할지 몰라 어려웠다
 // 
@@ -146,6 +132,54 @@ function filterZero(row) {
 // 이동 후에 0이 아닌 값들만을 남기는 데에 활용됩니다.
   return row.filter((num) => num !== 0); 
 }
+
+function slideLeft(){
+  for (let r = 0; r < rows; r++) {
+    let row = board[r]; // [0, 2, 2, 2]
+    row = slide(row);
+    board[r] = row;
+    for (let c = 0; c < columns; c++) {
+      let tile = document.getElementById(r.toString() + "-" + c.toString());
+      let num = board[r][c];
+      updateTile(tile, num)
+    }
+  }
+}
+
+// slideRight() 함수는 게임 보드를 오른쪽으로 이동시키고 결합하는 역할을 함
+function slideRight() {
+  for (let r = 0; r < rows; r++) {
+    let row = board[r]; //[0, 2, 2, 2]
+    row.reverse(); //[2, 2, 2, 0]
+    row = slide(row); //[4, 2, 0, 0]
+    board[r] = row.reverse(); //[0, 0, 2, 4];
+    for (let c = 0; c < columns; c++) {
+      let tile = document.getElementById(r.toString() + "-" + c.toString());
+      let num = board[r][c];
+      updateTile(tile, num);
+    }
+  }
+}
+
+
+
+
+// 업데이트 타일
+function updateTile(tile, num){
+  tile.innerHTML = "";
+  tile.classList.value = "";
+  tile.classList.add('tile');
+  if(num > 0){
+    tile.innerText = num.toString();
+    if(num <= 4096){
+      tile.classList.add("x" + num.toString());
+    }else{
+      tile.classList.add('x8192')
+    }
+  }
+}
+
+
 
 // 사용자 입력처리 는 ketup 이벤트를 사용 
 // 키를 입력한 경우 숫자가 합쳐지기 때문에 여기에 score를 넣어줘야 하나?
