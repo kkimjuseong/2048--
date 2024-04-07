@@ -144,6 +144,25 @@ document.addEventListener("keyup", (e) => {
   document.getElementById("score").innerText = score;
 });
 
+// 타일 이동 및 결합 로직 구현
+function slide(row){
+  row = filterZero(row); 
+  for (let i = 0; i < row.length - 1; i++){
+    if(row[i] === row[i + 1]){
+      row[i] *= 2;
+
+      // 같은숫자가 합쳐지면 한개만 남고 하나는 사라져야 하기 때문에
+      // i+1즉 i번째 인덱스가 0일때 0 + 1 즉 현재요소의 다음요소를 0으로 만들어줌
+      row[i + 1] = 0;
+      score += row[i];
+    }
+  }
+  while(row.length < columns){
+    row.push(0);
+  }
+  return row;
+}
+
 
 
 /*
