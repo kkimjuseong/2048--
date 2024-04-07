@@ -1,16 +1,15 @@
-// 1. 전역변수 설정
+// 전역변수
 
-let board;
+let board = 0;
 let score = 0;
-let bastScore = 0;
+let bestScore = 0;
 let row = [];
 const rows = 4;
 const columns = 4;
-const $board = document.getElementById("board");
 const $score = document.getElementById("score");
 const $bestScore = document.getElementById("bestScore");
+const $board = document.getElementById("board");
 
-// 2. 게임 보드 생성 및 초기 상태 설정
 
 window.onload = function () {
   setGame();
@@ -26,133 +25,123 @@ function setGame() {
     [0, 0, 0, 0],
   ];
 
-  // 타일 생성과 초기 상태 설정
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < columns; c++) {
-      let tile = document.createElement("div");
-      tile.id = r.toString() + "-" + c.toString();
-      let num = board[r][c];
-      updateTile(tile, num);
-      document.getElementById("board").append(tile);
-    }
+// 타일 생성과 초기 상태 설정
+// 4x4 크기의 보드를 생성하기 위해 이중반복문 사용
+// 행을 반복
+for (let r = 0; r < rows; r++) {
+  // 열을 반복
+  for (let c = 0; c < columns; c++) {
+    // 새로운 div 요소를 생성하여 타일을 나타냄
+    let tile = document.createElement("div");
+    // 타일의 id를 행과 열을 이용하여 지정
+    // 즉 id=tile를 만들고 이를 표시하는 id명이
+    // 0-1 0-2 0-3 0-4
+    // 1-0 1-1 1-2 1-3
+    // 2-0 2-1 2-2 2-3
+    // 3-0 3-1 3-2 3-3 처럼 표현됨
+    tile.id = r.toString() + "-" + c.toString();
+
+    // 현재 타일의 숫자 값을 가져옴
+    let num = board[r][c];
+    // updateTile 함수를 사용하여 타일을 업데이트함
+    updateTile(tile, num);
+    // 게임 보드의 HTML 요소에 생성된 타일을 추가
+    document.getElementById("board").append(tile);
   }
+}
 
   // 게임 시작 시에 두 개의 타일 생성
   setTwo();
   setTwo();
 }
 
-// filterZero(row)함수는 주어진 배열에서 0이 아닌 값들만들 필터링 해 새로운 배열을 생성하는 역할을 함.
-// 1. 주어진 배열을 순회하면서 0이 아닌 값을을 추출
-// 2. 추출된 값들로 새로운 배열을 생성
-// 3. 생성된 새로운 배열을 반환한다.
+function setTwo(){
+  // 빈 공간을 확인 , 빈 공간, 랜덤한 위치에 새로운 타일을 생성해야함
 
-// 새로운 배열 생성
-function filterZero(row) {
-  // 이 함수는 주어진 배열에서 0이 아닌 값들만을 추출하여 새로운 배열을 생성하고, 해당 배열을 반환합니다. 
-  // 이 함수는 주로 slide() 함수 내에서 사용되어 이동 후에 0이 아닌 값들만을 남기는 데에 활용됩니다.
-  return row.filter((num) => num !== 0); 
-}
-
-// 빈 타일 확인 및 새로운 타일 생성
-function setTwo() {
-  // 1. 빈 공간 확인: 보드 상에 빈 공간이 있는지 확인, 즉 값이 0인 타일이 있는지 검사해야함.
-  // 2. 빈 공간에 랜덤한 위치에 새로운 타일 생성: 빈 공간이 있다면 그 중 하나를 선택해 값을 2로 설정한 후 해당 위치에 새로운 타일생성
+  // 빈 공간이 없으면 게임이 종료되는 로직도 넣어줘야함
   if(!hasEmptyTile()){
-    // 빈 공간이 없으면 게임이 종료됨.
     return;
   }
-  let found = false;
+
+  // 초기 시작은 빈 타일이 있는지 없는지 알 수 없으므로 false 찾지못했다라 가정함
+  let found = false
+  
+  // 처음 시작은 whil(true)로 시작하였음 그러나 타일이 생성되지 않았고,
+  // 이유를 찾던 중 타일이 새로 생성되면 반복문을 빠져 나가야 한다는걸 알게됨
+  // 그래서 found를 false로 정의해두고 시작함
+
+  // while(ture) 로 만들지 않은 이유는 빈 공간을 찾지 않더라도 계속 진행돼
+  // 무한루프에 빠지게 될 수 있음 그래서 빈 공간을 찾은 경우에만 반복을 멈추도록
+  // found변수를 사용하는것이 좋음 
   while(!found){
-    // 랜덤한 위치 생성
     let r = Math.floor(Math.random() * rows);
     let c = Math.floor(Math.random() * columns);
     if(board[r][c] === 0){
-      // 빈 공간에 2생성
+      // 빈 공간에 2 생성
       board[r][c] = 2;
-      // 해당 위치에 새로운 타일 생성
+      // 해당 위치에 새로운 타일이 생성
       let $tile = document.getElementById(r.toString() + "-" + c.toString());
-      $tile.innerHTML = "2";
-      $tile.classList.add("x2");
+      $tile.innerHTML = '2';
+      $tile.classList.add('x2');
       found = true;
     }
   }
 }
 
-// 타일 업데이트 및 표시
-function updateTile(tile, num) {
-  tile.innerText = "";
-  tile.classList.value = "";
-  tile.classList.add("tile");
-  if (num > 0) {
-    tile.innerText = num.toString();
-    if (num <= 4096) {
-      tile.classList.add("x" + num.toString());
-    } else {
-      tile.classList.add("x8192");
+// 빈 공간이 있는지 확인하는 함수
+function hasEmptyTile(){
+  for(let r = 0; r < rows; r++){
+    for(let c = 0; c < columns; c++){
+      if(board[r][c] === 0){
+        return true;
+      }
     }
   }
+  alert(`score : ${score}`);
+
 }
-
-// 사용자 입력 처리
-document.addEventListener("keyup", (e) => {
-  // code는 이벤트 객체 속성 중 하나로 해당 이벤트가 발생한 키보드의 키 코드를 나타냅니다.
-  // key는 이벤트 객체 속성 중 하나로 해당 이벤트가 발생한 키보드의 실제 키 값을 나타냅니다.
-  if (e.code === "ArrowLeft" || e.key === "a") {
-    slideLeft();
-    setTwo();
-  } else if (e.code === "ArrowRight" || e.key === "d") {
-    slideRight();
-    setTwo();
-  } else if (e.code === "ArrowUp" || e.key === "w") {
-    slideUp();
-    setTwo();
-  } else if (e.code === "ArrowDown" || e.key === "s") {
-    slideDown();
-    setTwo();
-  }
-  document.getElementById("score").innerText = score;
-});
-
-
+// 처음 return으로 false를 넣고 돌렸더니 새로고침이 안되는거 그래서 왜인지 찾던중
+// 게임이 끝났을때 계속 false를 반환했기 때문에 새로침이 안되는것
+// 그래서 ture로 바꿔주고 호출부에서 !hasEmptyTile 부정을 해주니 새로고침이 됨
+// 이게 왜 이럴까? 설명이 필요해보임
 
 
 // 타일 이동 및 결합 로직 구현
-//slide() 함수는 주어진 배열 row를 왼쪽으로 이동시키고 결합하는 역할을 합니다.
-//이를 위해서는 배열 내에서 0이 아닌 값들을 왼쪽으로 이동시키고, 인접한 같은 값들을 합치는 작업을 수행해야 합니다.
-/*
-  1. 0이아닌 값들을 왼쪽으로 이동시키기
-  2. 인접한 같은 값들을 합치기
-  3. 결과 반환
-*/
-
-function slide(row) {
-  //[0, 2, 2, 2]
-  row = filterZero(row); //[2, 2, 2]
-  for (let i = 0; i < row.length - 1; i++) {
-    if (row[i] == row[i + 1]) {
+// 이해하고 나니 코드 자체는 쉬웠는데 어떤식으로 만들어야 할지 몰라 어려웠다
+// 
+function slide(row){
+  row = filterZero(row); 
+  for (let i = 0; i < row.length - 1; i++){
+    if(row[i] === row[i + 1]){
       row[i] *= 2;
+
+      // 같은숫자가 합쳐지면 한개만 남고 하나는 사라져야 하기 때문에
+      // i+1즉 i번째 인덱스가 0일때 0 + 1 즉 현재요소의 다음요소를 0으로 만들어줌
       row[i + 1] = 0;
       score += row[i];
     }
-  } //[4, 0, 2]
-  //add zeroes
-  while (row.length < columns) {
+  }
+  while(row.length < columns){
     row.push(0);
-  } //[4, 2, 0, 0]
+  }
   return row;
 }
 
-// slideLeft() 함수는 게임 보드를 왼쪽으로 이동시키고 결합하는 역할을 함.
-function slideLeft() {
+function filterZero(row) {
+// 이 함수는 주어진 배열에서 0이 아닌 값들만을 추출하여 새로운 배열을 생성 및 반환
+// 이동 후에 0이 아닌 값들만을 남기는 데에 활용됩니다.
+  return row.filter((num) => num !== 0); 
+}
+
+function slideLeft(){
   for (let r = 0; r < rows; r++) {
-    let row = board[r];
+    let row = board[r]; // [0, 2, 2, 2]
     row = slide(row);
     board[r] = row;
     for (let c = 0; c < columns; c++) {
       let tile = document.getElementById(r.toString() + "-" + c.toString());
       let num = board[r][c];
-      updateTile(tile, num);
+      updateTile(tile, num)
     }
   }
 }
@@ -203,77 +192,80 @@ function slideDown() {
   }
 }
 
-// hasEmptyTile() 함수는 게임 보드에 빈 타일이 존재하는지 확인하는 역할을 함
-function hasEmptyTile() {
-  // 게임 보드를 순회 하면서 빈 타일이 있는지 확인
-  for(let r = 0; r < rows; r++){
-    for(let c = 0; c < columns; c++){
-      if(board[r][c] === 0){
-        // 빈 타일이 존재하면 true 반환
-        return true;
-      }
+// 업데이트 타일
+function updateTile(tile, num){
+  tile.innerHTML = "";
+  tile.classList.value = "";
+  tile.classList.add('tile');
+  if(num > 0){
+    tile.innerText = num.toString();
+    if(num <= 4096){
+      tile.classList.add("x" + num.toString());
+    }else{
+      tile.classList.add('x8192')
     }
   }
-  
-  alert(`score : ${score}`);
-
-  // 빈 타일이 존재하지 않으면 게임이 끝나기 때문에 end()함수 호출
-  // end();
-  // return false; 
 }
 
-// end 조건
-// function end() {
-//   let bestScore = document.getElementById("bestScore").innerHTML;
-  
-//   alert(`score : ${score}`);
 
-//   if(parseInt(bestScore) < parseInt(score)) {
-//     localStorage.removeItem("2048_best_score");
-// 		localStorage.setItem("2048_best_score", score);
-// 		document.getElementById("bestScore").innerHTML = score;		
-//   }
-// }
+// 사용자 입력처리 는 ketup 이벤트를 사용 
+// 키를 입력한 경우 숫자가 합쳐지기 때문에 여기에 score를 넣어줘야 하나?
+// if문을 돌려서 이벤트를 진행하고 if문이 끝났을때 score를 넣어주면 될듯
+// code 이벤트객체 속성을 사용 
+// 아스키코드인 ArrowLeft를 써서 왼쪽키임을 입력
+// 또한 wasd 를 넣어주기 위해 key 속성을 사용
+
+document.addEventListener("keyup", (e) => {
+  // code는 이벤트 객체 속성 중 하나로 해당 이벤트가 발생한 키보드의 키 코드를 나타냅니다.
+  // key는 이벤트 객체 속성 중 하나로 해당 이벤트가 발생한 키보드의 실제 키 값을 나타냅니다.
+  if (e.code === "ArrowLeft" || e.key === "a") {
+    slideLeft();
+    setTwo();
+  } else if (e.code === "ArrowRight" || e.key === "d") {
+    slideRight();
+    setTwo();
+  } else if (e.code === "ArrowUp" || e.key === "w") {
+    slideUp();
+    setTwo();
+  } else if (e.code === "ArrowDown" || e.key === "s") {
+    slideDown();
+    setTwo();
+  }
+  document.getElementById("score").innerText = score;
+});
 
 /*
+전역변수 설정: 
+필요한 변수들을 먼저 설정합니다.
 
-전역 변수 설정:
-board: 게임 보드를 나타내는 2차원 배열.
-score: 현재 점수를 나타내는 변수.
-rows: 게임 보드의 행 수.
-columns: 게임 보드의 열 수.
-$board, $score, $bestScore: HTML 요소에 대한 참조를 나타내는 변수들.
-window.onload 이벤트 핸들러:
+게임 보드 생성 및 초기 상태 설정: setGame() 으로 설정
+함수를 만들어서 게임 보드를 생성하고 초기 상태를 설정합니다. 
+이 함수에서는 보드를 초기화하고 각 타일에 대한 HTML 요소를 생성하여 보드에 추가
 
-HTML 문서가 로드되면 setGame() 함수가 호출됨.
-setGame() 함수:
+빈 타일 확인 및 새로운 타일 생성:  
+함수와 함수를 만들어서 빈 타일이 존재하는지 확인하고, 
+필요한 경우 새로운 타일을 생성
+setTwo() 타일만드는 함수설정 , hasEmptyTile() 빈 타일 찾는함수 설정
 
-board 배열을 초기화하고, 초기 상태의 게임 보드를 생성함.
-setTwo() 함수를 호출하여 게임 시작 시에 두 개의 타일(숫자 2인 타일)을 생성함.
-updateTile() 함수:
+사용자 입력 처리: 
+키보드 입력을 처리하는 부분을 구현합니다. 
+이 부분에서는 keyup 이벤트를 사용하여 사용자의 키 입력에 반응하고, 
+이동 및 타일 생성 함수를 호출합니다.
 
-HTML 타일 요소를 업데이트하고 화면에 표시하는 함수.
-주어진 숫자에 따라 타일의 내용과 클래스를 설정함.
-사용자 입력 처리:
 
-keyup 이벤트에 대한 이벤트 리스너를 등록하고, 사용자의 키보드 입력을 처리함.
-방향 키 입력에 따라 slideLeft(), slideRight(), slideUp(), slideDown() 함수를 호출하여 타일을 이동시킴.
-각 이동 후에는 setTwo() 함수를 호출하여 새로운 타일을 생성하고, 점수를 업데이트함.
-slide(), slideLeft(), slideRight(), slideUp(), slideDown() 함수:
+타일 이동 및 결합 로직 구현: 
+타일을 이동하고 결합하는 로직을 구현합니다. 
+이 부분에서는 왼쪽, 오른쪽,  위쪽, 아래쪽으로 타일을 이동시키고 결합하는 함수들을 만들어야 합니다.
 
-타일을 이동하고 결합하는 로직을 구현함.
-slide() 함수는 한 행 또는 열에 대해 이동 및 결합을 수행함.
-이동 및 결합 후에는 보드의 상태를 업데이트하고, 화면에 표시함.
-setTwo() 함수:
 
-빈 타일이 있는지 확인하고, 빈 타일 중 하나를 선택하여 그 위치에 새로운 타일(숫자 2인 타일)을 생성함.
-hasEmptyTile() 함수:
+타일 업데이트 및 표시: 
+타일의 업데이트와 표시를 담당하는 함수를 만듭니다. 
+이 함수는 보드의 상태를 반영하여 HTML 요소에 숫자를 업데이트하고 적절한 스타일을 적용합니다.
 
-게임 보드에 빈 타일이 있는지 확인함.
-checkGameOver() 함수:
 
-현재 보드 상태에서 더 이상 이동할 수 있는 타일이 없는지 확인하고, 게임 종료 여부를 결정함.
-모든 타일을 순회하며 인접한 타일과 비교하여 이동 가능 여부를 확인함. 
-만약 더 이상 이동할 수 있는 타일이 없으면 게임을 종료하고 결과를 알림창으로 표시함.
+종료 조건 구현: 
+게임이 종료되는 조건을 확인하고, 종료될 때 실행할 동작을 구현합니다. 
+이 부분에서는 주로 빈 타일이 없는 경우 게임 종료 및 최고 점수 갱신 등을 처리합니다.
 
+기타: 필요한 경우 추가적인 함수나 기능을 구현합니다. 이는 게임의 특성에 따라 다를 수 있습니다.
 */
