@@ -3,6 +3,7 @@
 let board;
 let score = 0;
 let bastScore = 0;
+let row = [];
 const rows = 4;
 const columns = 4;
 const $board = document.getElementById("board");

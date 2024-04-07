@@ -3,11 +3,13 @@
 let board = 0;
 let score = 0;
 let bestScore = 0;
-let rows = 4;
-let columns = 4;
+let row = [];
+const rows = 4;
+const columns = 4;
 const $score = document.getElementById("score");
 const $bestScore = document.getElementById("bestScore");
 const $board = document.getElementById("board");
+
 
 window.onload = function () {
   setGame();
@@ -118,6 +120,33 @@ function updateTile(tile, num){
   }
 }
 
+// 타일 이동 및 결합 로직 구현
+// 이해하고 나니 코드 자체는 쉬웠는데 어떤식으로 만들어야 할지 몰라 어려웠다
+// 
+function slide(row){
+  row = filterZero(row); 
+  for (let i = 0; i < row.length - 1; i++){
+    if(row[i] === row[i + 1]){
+      row[i] *= 2;
+
+      // 같은숫자가 합쳐지면 한개만 남고 하나는 사라져야 하기 때문에
+      // i+1즉 i번째 인덱스가 0일때 0 + 1 즉 현재요소의 다음요소를 0으로 만들어줌
+      row[i + 1] = 0;
+      score += row[i];
+    }
+  }
+  while(row.length < columns){
+    row.push(0);
+  }
+  return row;
+}
+
+function filterZero(row) {
+// 이 함수는 주어진 배열에서 0이 아닌 값들만을 추출하여 새로운 배열을 생성 및 반환
+// 이동 후에 0이 아닌 값들만을 남기는 데에 활용됩니다.
+  return row.filter((num) => num !== 0); 
+}
+
 // 사용자 입력처리 는 ketup 이벤트를 사용 
 // 키를 입력한 경우 숫자가 합쳐지기 때문에 여기에 score를 넣어줘야 하나?
 // if문을 돌려서 이벤트를 진행하고 if문이 끝났을때 score를 넣어주면 될듯
@@ -144,35 +173,7 @@ document.addEventListener("keyup", (e) => {
   document.getElementById("score").innerText = score;
 });
 
-// 타일 이동 및 결합 로직 구현
-function slide(row){
-  row = filterZero(row); 
-  for (let i = 0; i < row.length - 1; i++){
-    if(row[i] === row[i + 1]){
-      row[i] *= 2;
-
-      // 같은숫자가 합쳐지면 한개만 남고 하나는 사라져야 하기 때문에
-      // i+1즉 i번째 인덱스가 0일때 0 + 1 즉 현재요소의 다음요소를 0으로 만들어줌
-      row[i + 1] = 0;
-      score += row[i];
-    }
-  }
-  while(row.length < columns){
-    row.push(0);
-  }
-  return row;
-}
-
-function filterZero(row) {
-// 이 함수는 주어진 배열에서 0이 아닌 값들만을 추출하여 새로운 배열을 생성 및 반환
-// 이 함수는 주로 slide() 함수 내에서 사용되어,
-// 이동 후에 0이 아닌 값들만을 남기는 데에 활용됩니다.
-  return row.filter((num) => num !== 0); 
-}
-
 /*
-초보자가 위의 코드를 구현하려면 다음과 같은 순서로 함수를 만들어야 합니다.
-
 전역변수 설정: 
 필요한 변수들을 먼저 설정합니다.
 
