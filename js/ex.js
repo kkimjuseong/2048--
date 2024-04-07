@@ -53,6 +53,30 @@ for (let r = 0; r < rows; r++) {
   setTwo();
 }
 
+function setTwo(){
+  // 빈 공간을 확인 , 빈 공간, 랜덤한 위치에 새로운 타일을 생성해야함
+
+  // 빈 공간이 없으면 게임이 종료되는 로직도 넣어줘야함
+  if(!hasEmptyTile()){
+    return;
+  }
+
+  let found = false
+  while(!found){
+    let r = Math.floor(Math.random() * rows);
+    let c = Math.floor(Math.random() * columns);
+    if(board[r][c] === 0){
+      // 빈 공간에 2 생성
+      board[r][c] = 2;
+      // 해당 위치에 새로운 타일이 생성
+      let $tile = document.getElementById(r.toString() + "-" + c.toString());
+      $tile.innerHTML = '2';
+      $tile.classList.add('x2');
+      found = true;
+    }
+  }
+}
+
 
 
 /*
