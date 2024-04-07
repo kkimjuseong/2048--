@@ -77,6 +77,19 @@ function setTwo(){
   }
 }
 
+// 빈 공간이 있는지 확인하는 함수
+function hasEmptyTile(){
+  for(let r = 0; r < rows; r++){
+    for(let c = 0; c < columns; c++){
+      if(board[r][c] === 0){
+        return true;
+      }
+    }
+  }
+}
+// 처음 return으로 false를 넣고 돌렸더니 새로고침이 안되는거 그래서 왜인지 찾던중
+// 게임이 끝났을때 계속 false를 반환했기 때문에 새로침이 안되는것
+
 
 
 /*
