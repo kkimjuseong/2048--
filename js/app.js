@@ -95,22 +95,24 @@ function updateTile(tile, num) {
 
 // 사용자 입력 처리
 document.addEventListener("keyup", (e) => {
-  // code 는 이벤트 객체 속성중 하나로 해당 이벤트가 발생한 키보드의 키 코드를 나타낸다.
-  if (e.code === "ArrowLeft") {
+  // code는 이벤트 객체 속성 중 하나로 해당 이벤트가 발생한 키보드의 키 코드를 나타냅니다.
+  // key는 이벤트 객체 속성 중 하나로 해당 이벤트가 발생한 키보드의 실제 키 값을 나타냅니다.
+  if (e.code === "ArrowLeft" || e.key === "a") {
     slideLeft();
     setTwo();
-  } else if (e.code === "ArrowRight") {
+  } else if (e.code === "ArrowRight" || e.key === "d") {
     slideRight();
     setTwo();
-  } else if (e.code === "ArrowUp") {
+  } else if (e.code === "ArrowUp" || e.key === "w") {
     slideUp();
     setTwo();
-  } else if (e.code === "ArrowDown") {
+  } else if (e.code === "ArrowDown" || e.key === "s") {
     slideDown();
     setTwo();
   }
   document.getElementById("score").innerText = score;
 });
+
 
 
 

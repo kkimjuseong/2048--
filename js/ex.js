@@ -101,6 +101,7 @@ function hasEmptyTile(){
 // 그래서 ture로 바꿔주고 호출부에서 !hasEmptyTile 부정을 해주니 새로고침이 됨
 // 이게 왜 이럴까? 설명이 필요해보임
 
+
 function updateTile(tile, num){
   tile.innerHTML = "";
   tile.classList.value = "";
@@ -114,6 +115,34 @@ function updateTile(tile, num){
     }
   }
 }
+
+// 사용자 입력처리 는 ketup 이벤트를 사용 
+// 키를 입력한 경우 숫자가 합쳐지기 때문에 여기에 score를 넣어줘야 하나?
+// if문을 돌려서 이벤트를 진행하고 if문이 끝났을때 score를 넣어주면 될듯
+// code 이벤트객체 속성을 사용 
+// 아스키코드인 ArrowLeft를 써서 왼쪽키임을 입력
+// 또한 wasd 를 넣어주기 위해 key 속성을 사용
+
+document.addEventListener("keyup", (e) => {
+  // code는 이벤트 객체 속성 중 하나로 해당 이벤트가 발생한 키보드의 키 코드를 나타냅니다.
+  // key는 이벤트 객체 속성 중 하나로 해당 이벤트가 발생한 키보드의 실제 키 값을 나타냅니다.
+  if (e.code === "ArrowLeft" || e.key === "a") {
+    slideLeft();
+    setTwo();
+  } else if (e.code === "ArrowRight" || e.key === "d") {
+    slideRight();
+    setTwo();
+  } else if (e.code === "ArrowUp" || e.key === "w") {
+    slideUp();
+    setTwo();
+  } else if (e.code === "ArrowDown" || e.key === "s") {
+    slideDown();
+    setTwo();
+  }
+  document.getElementById("score").innerText = score;
+});
+
+
 
 /*
 초보자가 위의 코드를 구현하려면 다음과 같은 순서로 함수를 만들어야 합니다.
