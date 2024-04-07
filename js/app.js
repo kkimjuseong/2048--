@@ -135,7 +135,6 @@ function slide(row) {
       score += row[i];
     }
   } //[4, 0, 2]
-  row = filterZero(row); //[4, 2]
   //add zeroes
   while (row.length < columns) {
     row.push(0);
