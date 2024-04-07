@@ -61,7 +61,16 @@ function setTwo(){
     return;
   }
 
+  // 초기 시작은 빈 타일이 있는지 없는지 알 수 없으므로 false 찾지못했다라 가정함
   let found = false
+  
+  // 처음 시작은 whil(true)로 시작하였음 그러나 타일이 생성되지 않았고,
+  // 이유를 찾던 중 타일이 새로 생성되면 반복문을 빠져 나가야 한다는걸 알게됨
+  // 그래서 found를 false로 정의해두고 시작함
+
+  // while(ture) 로 만들지 않은 이유는 빈 공간을 찾지 않더라도 계속 진행돼
+  // 무한루프에 빠지게 될 수 있음 그래서 빈 공간을 찾은 경우에만 반복을 멈추도록
+  // found변수를 사용하는것이 좋음 
   while(!found){
     let r = Math.floor(Math.random() * rows);
     let c = Math.floor(Math.random() * columns);
@@ -89,8 +98,22 @@ function hasEmptyTile(){
 }
 // 처음 return으로 false를 넣고 돌렸더니 새로고침이 안되는거 그래서 왜인지 찾던중
 // 게임이 끝났을때 계속 false를 반환했기 때문에 새로침이 안되는것
+// 그래서 ture로 바꿔주고 호출부에서 !hasEmptyTile 부정을 해주니 새로고침이 됨
+// 이게 왜 이럴까? 설명이 필요해보임
 
-
+function updateTile(tile, num){
+  tile.innerHTML = "";
+  tile.classList.value = "";
+  tile.classList.add('tile');
+  if(num > 0){
+    tile.innerText = num.toString();
+    if(num <= 4096){
+      tile.classList.add("x" + num.toString());
+    }else{
+      tile.classList.add('x8192')
+    }
+  }
+}
 
 /*
 초보자가 위의 코드를 구현하려면 다음과 같은 순서로 함수를 만들어야 합니다.
