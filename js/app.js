@@ -65,8 +65,13 @@ function setTwo(){
   // 이후 checkGameEndCondition함수를 만들어 넣었더니 예상대로 됨.
 
   // 부정연산자를 넣어준 이유는 특정 조건이 거짓일때 참을 반환하도록 만들기 때문
-  if(!checkEmptyTiles() && !checkGameEndCondition()){
+  if (!checkEmptyTiles() && checkGameEndCondition()) {
     alert(`game over!!\nscore : ${score}`);
+    if (score > bestScore) {
+      bestScore = score;
+      localStorage.setItem("2048_best_score", bestScore);
+      $bestScore.innerHTML = bestScore;
+    }
     return;
   }
 
@@ -77,7 +82,7 @@ function setTwo(){
   // 이유를 찾던 중 타일이 새로 생성되면 반복문을 빠져 나가야 한다는걸 알게됨
   // 그래서 found를 false로 정의해두고 시작함
 
-  // while(ture) 로 만들지 않은 이유는 빈 공간을 찾지 않더라도 계속 진행돼
+  // while(true) 로 만들지 않은 이유는 빈 공간을 찾지 않더라도 계속 진행돼
   // 무한루프에 빠지게 될 수 있음 그래서 빈 공간을 찾은 경우에만 반복을 멈추도록
   // found변수를 사용하는것이 좋음 
   while(!found){
@@ -105,11 +110,12 @@ function checkEmptyTiles(){
       }
     }
   }
+  return false;
 }
 
 // 처음 return으로 false를 넣고 돌렸더니 새로고침이 안되는거 그래서 왜인지 찾던중
 // 게임이 끝났을때 계속 false를 반환했기 때문에 새로침이 안되는것
-// 그래서 ture로 바꿔주고 호출부에서 !hasEmptyTile 부정을 해주니 새로고침이 됨
+// 그래서 true로 바꿔주고 호출부에서 !hasEmptyTile 부정을 해주니 새로고침이 됨
 // 이게 왜 이럴까? 설명이 필요해보임
 
 
@@ -224,27 +230,27 @@ function checkGameEndCondition() {
       // 왼쪽 방향으로 인접한 타일과 비교하여 이동 가능한지 확인
       // c > 0 은 c열이 보드의 가장 왼쪽열에 위치하지 않는지 판단.
       if (c > 0 && (board[r][c - 1] === 0 || board[r][c - 1] === currentTile)) {
-        return true;
+        return false;
       }
 
       // 오른쪽 방향으로 인접한 타일과 비교하여 이동 가능한지 확인
       if (c < columns - 1 && (board[r][c + 1] === 0 || board[r][c + 1] === currentTile)) {
-        return true;
+        return false;
       }
       
       // 위쪽 방향으로 인접한 타일과 비교하여 이동 가능한지 확인
       if (r > 0 && (board[r - 1][c] === 0 || board[r - 1][c] === currentTile)) {
-        return true;
+        return false;
       }
 
       // 아래쪽 방향으로 인접한 타일과 비교하여 이동 가능한지 확인
       if (r < rows - 1 && (board[r + 1][c] === 0 || board[r + 1][c] === currentTile)) {
-        return true;
+        return false;
       }
     }
   }
   // 모든 방향으로 이동이 불가능할 경우 false 반환
-  return false;
+  return true;
 }
 
 
