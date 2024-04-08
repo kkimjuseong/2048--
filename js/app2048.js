@@ -283,6 +283,26 @@ document.addEventListener("keyup", (e) => {
   document.getElementById("score").innerText = score;
 });
 
+document.getElementById("Up").addEventListener("click", () => {
+  slideUp();
+  setTwo();
+});
+
+document.getElementById("Left").addEventListener("click", () => {
+  slideLeft();
+  setTwo();
+});
+
+document.getElementById("Down").addEventListener("click", () => {
+  slideDown();
+  setTwo();
+});
+
+document.getElementById("Right").addEventListener("click", () => {
+  slideRight();
+  setTwo();
+});
+
 
 /*
 전역변수 설정: 

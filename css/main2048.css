@@ -1,6 +1,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
+  /* background: #222; */
 }
 
 hr {
@@ -122,4 +123,66 @@ h3{
 .x8192 {
   background-color: #ff2020;
   color: white;
+}
+
+
+
+
+#btnArea{
+  width: 408px;
+  height: 150px;
+  background-color: #cdc1b5;
+  border: 2px solid #978b7f;
+  margin: 0 auto;
+  font-size: 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#btnArea #Up{
+  background: #978b7f;
+    color: #fff;
+    width: 86px;
+    height: 53px;
+    border-radius: 3px;
+    font-size: 30px;
+}
+
+#Left{
+  background: #978b7f;
+    color: #fff;
+    width: 86px;
+    height: 53px;
+    border-radius: 3px;
+    font-size: 30px;
+}
+
+#Down{
+  background: #978b7f;
+    color: #fff;
+    width: 86px;
+    height: 53px;
+    border-radius: 3px;
+    font-size: 30px;
+}
+
+#Right{
+  background: #978b7f;
+    color: #fff;
+    width: 86px;
+    height: 53px;
+    border-radius: 3px;
+    font-size: 30px;
+}
+
+/* 클릭된 버튼의 스타일 및 전환 효과 */
+button {
+  transition: background-color 0.3s ease;
+}
+
+button:active {
+  background-color: lightgray;
 }
