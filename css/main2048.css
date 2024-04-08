@@ -179,8 +179,8 @@ h3{
 }
 
 /* 클릭된 버튼의 스타일 및 전환 효과 */
-button {
-  transition: background-color 0.3s ease;
+button.pressed {
+  transform: scale(1.1);
 }
 
 button:active {
