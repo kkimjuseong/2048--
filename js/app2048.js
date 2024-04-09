@@ -285,13 +285,6 @@ document.addEventListener("keyup", (e) => {
   }
   document.getElementById("score").innerText = score;
 
-
-  $button.classList.add("pressed"); // 버튼이 눌렸을 때 효과 클래스 추가
-  setTimeout(() => {
-    $button.classList.remove("pressed"); // 0.1초 후 효과 클래스 제거
-  }, 100);
-
-
 });
 
 document.getElementById("Up").addEventListener("click", () => {
