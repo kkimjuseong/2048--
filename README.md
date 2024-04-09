@@ -33,6 +33,9 @@ https://github.com/kkimjuseong/2048--.git
 ---
 ![2048score올라감](/assets/2048score올라감.PNG)
 - 타일끼리 합쳐질때 점수 표시
+
+
+
 ![2048best스코어기록](/assets/2048best스코어기록.PNG)
 - 게임이 끝났을때 Best의 최고점수 저장
 - 키보드 방향키와 wasd 로 이동가능
