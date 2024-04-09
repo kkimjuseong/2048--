@@ -267,45 +267,49 @@ function checkGameEndCondition() {
 // wasd 를 넣어주자 생각이 듬.
 // 또한 wasd 를 넣어주기 위해 key 속성을 사용
 
+const directionFunctions = {
+  "ArrowLeft": slideLeft,
+  "a": slideLeft,
+  "ArrowRight": slideRight,
+  "d": slideRight,
+  "ArrowUp": slideUp,
+  "w": slideUp,
+  "ArrowDown": slideDown,
+  "s": slideDown
+};
+
 document.addEventListener("keyup", (e) => {
-  // code는 이벤트 객체 속성 중 하나로 해당 이벤트가 발생한 키보드의 키 코드를 나타냅니다.
-  // key는 이벤트 객체 속성 중 하나로 해당 이벤트가 발생한 키보드의 실제 키 값을 나타냅니다.
-  if (e.code === "ArrowLeft" || e.key === "a") {
-    slideLeft();
+  const directionFunction = directionFunctions[e.code] || directionFunctions[e.key];
+  if (directionFunction) {
+    directionFunction();
     setTwo();
-  } else if (e.code === "ArrowRight" || e.key === "d") {
-    slideRight();
-    setTwo();
-  } else if (e.code === "ArrowUp" || e.key === "w") {
-    slideUp();
-    setTwo();
-  } else if (e.code === "ArrowDown" || e.key === "s") {
-    slideDown();
-    setTwo();
+    document.getElementById("score").innerText = score;
   }
-  document.getElementById("score").innerText = score;
-
 });
 
-document.getElementById("Up").addEventListener("click", () => {
-  slideUp();
-  setTwo();
-});
+const directionButtons = {
+  "Up": slideUp,
+  "Left": slideLeft,
+  "Down": slideDown,
+  "Right": slideRight
+};
 
-document.getElementById("Left").addEventListener("click", () => {
-  slideLeft();
-  setTwo();
-});
+for (const [buttonId, directionFunction] of Object.entries(directionButtons)) {
+  document.getElementById(buttonId).addEventListener("click", () => {
+    directionFunction();
+    setTwo();
+    document.getElementById("score").innerText = score;
+  });
+}
 
-document.getElementById("Down").addEventListener("click", () => {
-  slideDown();
-  setTwo();
-});
+  // 버튼에 눌림 효과를 표시하기 위해 'pressed' 클래스를 추가합니다.
+  document.getElementById("Left").classList.add("pressed");
 
-document.getElementById("Right").addEventListener("click", () => {
-  slideRight();
-  setTwo();
-});
+  // 0.1초 후에 'pressed' 클래스를 제거하여 눌림 효과를 해제합니다.
+  setTimeout(() => {
+    document.getElementById("Left").classList.remove("pressed");
+  }, 100);
+
 
 /*
 전역변수 설정: 
