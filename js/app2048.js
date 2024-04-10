@@ -147,8 +147,8 @@ function filterZero(row) {
 function slideLeft() {
   for (let r = 0; r < rows; r++) {
     let row = board[r]; // [0, 2, 2, 2]
-    row = slide(row);
-    board[r] = row;
+    row = slide(row); // [2, 2, 2, 0]
+    board[r] = row;  // [4, 2, 0, 0]
     for (let c = 0; c < columns; c++) {
       let tile = document.getElementById(r.toString() + "-" + c.toString());
       let num = board[r][c];
