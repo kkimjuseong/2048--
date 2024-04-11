@@ -65,7 +65,7 @@ function setTwo() {
   // 이후 checkGameEndCondition함수를 만들어 넣었더니 예상대로 됨.
 
   // 부정연산자를 넣어준 이유는 특정 조건이 거짓일때 참을 반환하도록 만들기 때문
-  if (!checkEmptyTiles() && checkGameEndCondition()) {
+  if (checkEmptyTiles() && checkGameEndCondition()) {
     alert(`game over!!\nscore : ${score}`);
     if (score > bestScore) {
       bestScore = score;
@@ -106,11 +106,11 @@ function checkEmptyTiles() {
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < columns; c++) {
       if (board[r][c] === 0) {
-        return true;
+        return false;
       }
     }
   }
-  return false;
+  return true;
 }
 
 // 처음 return으로 false를 넣고 돌렸더니 새로고침이 안되는거 그래서 왜인지 찾던중
