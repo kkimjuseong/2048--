@@ -1,16 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
+    <style>
+      /* 모달 스타일링 */
+      .modal {
+        /* display: none;  */
+        position: fixed; /* 화면에 고정 */
+        z-index: 1; /* 다른 요소 위에 나타나도록 */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+        /* opacity: 0.1; */
+
+        /* background: transparent; */
+      }
+
+
+
+      /* 모달 내용 */
+      .modal-content {
+        width: 300px;
+        height: 100px;
+        background: white;
+        margin: 18% auto; /* 화면 중앙에 표시 */
+        padding: 20px;
+        border: 1px solid #888;
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); 
+      }
+
+      /* 모달 닫기 버튼 */
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
   </head>
+
   <body>
-    
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>게임 클리어!</p>
+        <p>스코어: <span id="modalScore"></span></p>
+      </div>
+    </div>
+
     <script>
-      window.addEventListener("load", (event) => {
-        console.log("page is fully loaded");
-      });
+      // 클리어 모달 열기
+      function openModal() {
+        const modal = document.getElementById("myModal");
+        const modalScore = document.getElementById("modalScore");
+        modalScore.textContent = score;
+        modal.style.display = "block";
+      }
+
+      // 클리어 모달 닫기
+      function closeModal() {
+        const modal = document.getElementById("myModal");
+        modal.style.display = "none";
+      }
+
+      // 모달 닫기 버튼에 이벤트 리스너 추가
+      document.querySelector(".close").addEventListener("click", closeModal);
+
+      // 게임 클리어 조건이 충족되면 모달 열기
+      if (checkGameClearCondition()) {
+        openModal();
+      }
     </script>
   </body>
 </html>
