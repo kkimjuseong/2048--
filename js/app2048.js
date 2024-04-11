@@ -55,6 +55,7 @@ function setGame() {
   setTwo();
 }
 
+
 function setTwo() {
   // 빈 공간을 확인 , 빈 공간, 랜덤한 위치에 새로운 타일을 생성해야함
 
@@ -66,7 +67,8 @@ function setTwo() {
 
   // 부정연산자를 넣어준 이유는 특정 조건이 거짓일때 참을 반환하도록 만들기 때문
   if (checkEmptyTiles() && checkGameEndCondition()) {
-    alert(`game over!!\nscore : ${score}`);
+    // alert(`game over!!\nscore : ${score}`);
+    openModal();
     if (score > bestScore) {
       bestScore = score;
       localStorage.setItem("2048_best_score", bestScore);
@@ -304,6 +306,22 @@ for (const [buttonId, directionFunction] of Object.entries(directionButtons)) {
     document.getElementById("score").innerText = score;
   });
 }
+
+function openModal() {
+  const modal = document.getElementById("myModal");
+  const modalScore = document.getElementById("modalScore");
+  modalScore.textContent = score;
+  modal.style.display = "block";
+}
+
+// 클리어 모달 닫기
+function closeModal() {
+  const modal = document.getElementById("myModal");
+  modal.style.display = "none";
+}
+
+// 모달 닫기 버튼에 이벤트 리스너 추가
+document.querySelector(".close").addEventListener("click", closeModal);
 
   // 아래 코드는 바꾸기 전 코드
 /*
